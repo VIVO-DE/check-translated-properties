@@ -5,24 +5,29 @@ class Checker(object):
         self.comparison_dict = comparison_dict
 
     def get_lines(self, lines):
-        new_lines = []
+        self.new_lines = []
         self.non_property_text = []
         self.prev_lines = []
-        continue_pattern = re.compile("\\\r?\n$")
+        self.current_prop = ""
         for line in lines:
-            if line.find("=") > -1:
-                if self.prev_lines:
-                    new_lines += self.get_new_lines(prop_name)
-                    self.prev_lines = []
-                if continue_pattern.search(line):
-                    print "continue pp"
-                    self.prev_lines.append(line)
-                prop_name, prop_value = line.split("=")
+            if self.line_has_property(line):
+                self.handle_property_line(line)
             else:
                 self.handle_non_property_line(line)
-                continue
-            new_lines += self.get_new_lines(prop_name, line)
-        return new_lines
+        return self.new_lines
+
+    def line_has_property(self, line):
+        return line.find("=") > -1 and not re.match("\s*#", line)
+
+    def handle_property_line(self, line):
+        continue_pattern = re.compile("\\\r?\n$")
+        if self.prev_lines:
+            self.new_lines += self.get_new_lines(self.current_prop)
+            self.prev_lines = []
+        if continue_pattern.search(line):
+            self.prev_lines.append(line)
+        self.current_prop, prop_value = line.split("=")
+        self.new_lines += self.get_new_lines(self.current_prop, line)
 
     def handle_non_property_line(self, line):
         if self.prev_lines:

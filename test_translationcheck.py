@@ -14,12 +14,19 @@ def test_it_omits_lines_if_key_is_found():
 def test_it_returns_non_property_lines_if_key_is_not_found():
     checker = linecheck.Checker({})
     test_lines = ["foo=bar", "#comment", "bar=baz"]
-    assert(test_lines == checker.get_lines(test_lines))    
+    assert(test_lines == checker.get_lines(test_lines))
+    test_lines = ["#comment1", "#comment2", "foo=bar", "bar=baz"]
+    assert(test_lines == checker.get_lines(test_lines))
 
-def test_it_omits_non_property_lines_if_key_is_found():
+def test_it_returns_non_property_lines_if_some_keys_are_not_found():
     checker = linecheck.Checker({"bar":"boo"})
-    test_lines = ["foo=bar", "#comment", "bar=baz"]
-    assert(["foo=bar"] == checker.get_lines(test_lines))   
+    test_lines = ["#comment", "foo=bar", "bar=baz"]
+    assert(["#comment", "foo=bar"] == checker.get_lines(test_lines))
+
+def test_it_omits_last_property_lines_if_key_is_found():
+    checker = linecheck.Checker({"bar":"boo"})
+    test_lines = ["foo=bar", "#comment1", "#comment2", "bar=baz"]
+    assert(["foo=bar"] == checker.get_lines(test_lines))
 
 def test_it_treats_comments_with_equal_signs_as_non_property_lines():
     checker = linecheck.Checker({})
