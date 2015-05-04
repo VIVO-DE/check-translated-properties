@@ -11,6 +11,11 @@ def test_it_omits_lines_if_key_is_found():
     test_lines = ["foo=bar", "bar=baz"]
     assert(["bar=baz"] == checker.get_lines(test_lines))
 
+def test_it_handles_property_values_with_equal_sign():
+    checker = linecheck.Checker({})
+    test_lines = ["foo=bar", "bar=baz=quux"]
+    assert(test_lines == checker.get_lines(test_lines))
+
 def test_it_returns_non_property_lines_if_key_is_not_found():
     checker = linecheck.Checker({})
     test_lines = ["foo=bar", "#comment", "bar=baz"]
