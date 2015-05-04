@@ -20,7 +20,7 @@ class Checker(object):
         return line.find("=") > -1 and not re.match("\s*#", line)
 
     def handle_property_line(self, line):
-        continue_pattern = re.compile("\\\r?\n$")
+        continue_pattern = re.compile(r"\\\r?\n$")
         if self.prev_lines:
             self.new_lines += self.get_new_lines(self.current_prop)
             self.prev_lines = []
