@@ -13,7 +13,9 @@ class Checker(object):
             if line.find("=") > -1:
                 if self.prev_lines:
                     new_lines += self.get_new_lines(prop_name)
+                    self.prev_lines = []
                 if continue_pattern.search(line):
+                    print "continue pp"
                     self.prev_lines.append(line)
                 prop_name, prop_value = line.split("=")
             elif self.prev_lines:
