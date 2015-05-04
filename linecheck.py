@@ -24,10 +24,11 @@ class Checker(object):
         if self.prev_lines:
             self.new_lines += self.get_new_lines(self.current_prop)
             self.prev_lines = []
+        self.current_prop, prop_value = line.split("=", 1)
         if continue_pattern.search(line):
             self.prev_lines.append(line)
-        self.current_prop, prop_value = line.split("=", 1)
-        self.new_lines += self.get_new_lines(self.current_prop, line)
+        else:
+            self.new_lines += self.get_new_lines(self.current_prop, line)
 
     def handle_non_property_line(self, line):
         if self.prev_lines:

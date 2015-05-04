@@ -42,3 +42,8 @@ def test_it_recognizes_and_omits_multiline_properties_if_key_is_found():
     checker = linecheck.Checker({"bar":"boo"})
     test_lines = ["bar=baz \\\n","quux", "foo=bar"]
     assert(["foo=bar"] == checker.get_lines(test_lines))    
+
+def test_it_recognizes_and_return_multiline_properties_if_key_is_found():
+    checker = linecheck.Checker({})
+    test_lines = ["bar=baz \\\n", "quux", "foo=bar"]
+    assert(test_lines == checker.get_lines(test_lines))    
