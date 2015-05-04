@@ -18,14 +18,17 @@ class Checker(object):
                     print "continue pp"
                     self.prev_lines.append(line)
                 prop_name, prop_value = line.split("=")
-            elif self.prev_lines:
-                self.prev_lines.append(line)
-                continue
             else:
-                self.non_property_text.append(line)
+                self.handle_non_property_line(line)
                 continue
             new_lines += self.get_new_lines(prop_name, line)
         return new_lines
+
+    def handle_non_property_line(self, line):
+        if self.prev_lines:
+            self.prev_lines.append(line)
+        else:
+            self.non_property_text.append(line)
 
     def get_new_lines(self, prop_name, line = ""):
         new_lines = []
