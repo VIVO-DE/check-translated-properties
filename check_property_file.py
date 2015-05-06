@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Compare the translatable properties of VIVO/Vitro to the
-German property file. Output the original file minus the 
+Compare the translatable properties file of VIVO/Vitro to a
+translated property file. Output the original file minus the 
 existing keys, with line breaks/comments intact.
 """
 
