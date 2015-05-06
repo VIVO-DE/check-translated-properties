@@ -6,4 +6,7 @@ Compare the i18n properties files of VIVO/Vitro to a property file with translat
 
     python check_property_file.py ORIGINAL_FILE TRANSLATED_FILE [OUTPUT_FILE]
 
+## Testing
+Testing is done with [Pytest](http://pytest.org):
 
+    py.test test_translationcheck.py
